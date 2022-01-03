@@ -158,6 +158,7 @@ var taskButtonHandler = function (event) {
     var taskId = targetEl.getAttribute("data-task-id");
     deleteTask(taskId);
   }
+
 };
 
 pageContentEl.addEventListener("click", taskButtonHandler);
@@ -186,8 +187,6 @@ var deleteTask = function (taskId) {
 };
 
 var editTask = function (taskId) {
-  console.log("editing task # " + taskId);
-  
   //get task list item element
   var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
 
@@ -246,7 +245,7 @@ var loadTasks = function () {
   if (!tasks) {
     tasks = [];
     return false;
-  }
+  };
 
   savedTasks = JSON.parse(savedTasks);
   console.log(savedTasks);
@@ -256,11 +255,40 @@ var loadTasks = function () {
     //pass each task object into the 'createTaskEl()' function
     createTaskEl(savedTasks[i]);
     tasks[i].id = taskIdCounter;
-    console.log(tasks[i].id);
   }
 
   //2. Convert tasks from the string format back to an array of objects
+  for (var i = 0; i < tasks.length; i++) {
+    console.log(tasks[i]);
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "task-item";
+    listItemEl.setAttribute("data-task-id", tasks[i].id);
+    console.log(listItemEl);
 
+    var taskInfoEl = document.createElement("div");
+    taskInfoEl.className = "task-info";
+    taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span> class='task-type'>" + tasks[i].type + "</span>";
+    listItemEl.appendChild(taskInfoEl);
+    console.log(listItemEl);
+
+    if (tasks[i].status === "to do") {
+      listItemEl.querySelector("select[name='status-change']").selectedIndex = 0;
+    } 
+    else if (tasks[i].status === "in progress") {
+      listItemEl.querySelector(
+        "select[name='status-change']"
+      ).selectedIndex = 1;
+    }
+    else if (tasks[i].status === "complete") {
+      tasks[i].status === "in progress"
+          listItemEl.querySelector(
+            "select[name='status-change']"
+      ).selectedIndex = 2;
+      tasksCompletedEl.appendChild(listItemEl);
+    }
+  }
+
+  
   //3. Iterate through a task array and create task elements on the page from it
 
 };
@@ -268,6 +296,15 @@ var loadTasks = function () {
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
 loadTasks();
+
+//I am going to stop here. This module dumped me off in the middle of the woods at night with a flashlight and told me to figure my way out of the woods.
+//I do not appreciate that "abandonment" "style" of learning. It is wasteful of my time and highly disrespectful to not continue teaching me how to
+//implement complicated code I've never written before and haven't gotten comfortable with.
+//Code is NOT intuitive and doesn't lend itself to being "figured out" by someone who doesn't yet understand what the heck they are doing!
+//I am highly pissed about this lesson and really hope future modules don't pull this mess on me again. It's confusing and frustrating.
+//No code snapshot was presented to help me see what I'm doing or where I am even going wrong.
+//This lesson was confusing enough without them trying the "sink or swim" method and throwing me out in the deep end with hardly a lesson. 
+//I deeply resent this "style" of "teaching" and do not learn what I need to do without guidance. I only end up wasting my time spinning in circles. 
 
 
 
