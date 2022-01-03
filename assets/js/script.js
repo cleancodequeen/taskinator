@@ -238,9 +238,36 @@ var saveTasks = function () {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
+var loadTasks = function () {
+  //1. Get task items from localStorage. Should reassign the tasks variable to whatever localStorage returns
+  var savedTasks = localStorage.getItem("tasks");
+  console.log(savedTasks);
 
+  if (!tasks) {
+    tasks = [];
+    return false;
+  }
+
+  savedTasks = JSON.parse(savedTasks);
+  console.log(savedTasks);
+
+  // //loop through savedTasks array
+  for (var i = 0; i < savedTasks.length; i++) {
+    //pass each task object into the 'createTaskEl()' function
+    createTaskEl(savedTasks[i]);
+    tasks[i].id = taskIdCounter;
+    console.log(tasks[i].id);
+  }
+
+  //2. Convert tasks from the string format back to an array of objects
+
+  //3. Iterate through a task array and create task elements on the page from it
+
+};
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks();
 
 
 
